@@ -1,0 +1,12 @@
+.audio {
+  width: 180px;
+  height: 247px;
+}
+
+.audioCard {
+  width: 180px;
+  height: 180px;
+  background-color: #c4c4c4;
+  border-radius: 4px;
+}
+
