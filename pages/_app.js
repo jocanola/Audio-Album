@@ -1,7 +1,12 @@
-import '../styles/globals.css'
+import { AlbumContextProvider } from "../components/MusicContext/AlbumContext";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <AlbumContextProvider>
+      <Component {...pageProps} />
+    </AlbumContextProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;

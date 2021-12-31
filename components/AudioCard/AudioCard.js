@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { AudioContent } from "../AudioContent/AudioContent";
+import { AlbumContext } from "../MusicContext/AlbumContext";
 import styles from "./AudioCard.module.css";
 
 export const AudioCard = () => {

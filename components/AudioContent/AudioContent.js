@@ -1,15 +1,13 @@
 import styles from "./AudioContent.module.css";
 
-export const AudioContent = ({ title, lecturer, isPlayList }) => {
-  const getStyle = !isPlayList
-    ? styles.audioTitle
-    : [styles.audioTitle, styles.audioBoldTitle];
+export const AudioContent = ({ title, lecturer, isPlayList, isAudioList }) => {
   return (
     <>
-      <p className={!isPlayList ? styles.audioTitle : styles.audioBoldTitle}>
-        {title}
-      </p>
-      <p className={styles.audioLecturer}>{lecturer}</p>
+      {isAudioList && <p className={styles["audioTitle"]}>{title}</p>}
+      {isPlayList && (
+        <marquee className={styles["audioBoldTitle"]}>{title}</marquee>
+      )}
+      {isPlayList && <p className={styles.audioLecturer}>{lecturer}</p>}
     </>
   );
 };
