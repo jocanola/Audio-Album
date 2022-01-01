@@ -1,15 +1,9 @@
-import Head from "next/head";
-import Image from "next/image";
-import { useContext } from "react";
-import { AudioCard } from "../components/AudioCard/AudioCard";
-import { AudioList } from "../components/AudioList/AudioList";
+import { useContext, useEffect } from "react";
 import { CurrentPlaying } from "../components/CurrentPlaying/CurrentPlaying";
-import { Header } from "../components/Header/Header";
 import { Layout } from "../components/layouts/Layout";
 import { NowPlaying } from "../components/layouts/NowPlaying/NowPlaying";
 import { RecentList } from "../components/layouts/Recent/RecentList";
 import { AlbumContext } from "../components/MusicContext/AlbumContext";
-import styles from "../styles/Home.module.css";
 
 export async function getStaticProps() {
   const res = await fetch(
@@ -24,15 +18,21 @@ export async function getStaticProps() {
 }
 
 export default function Home({ albums }) {
-  const { nowPlaying } = useContext(AlbumContext);
+  const { nowPlaying, setAlbum, recentAlbums } = useContext(AlbumContext);
+
+  useEffect(() => {
+    setAlbum(albums);
+  }, [albums]);
   return (
     <>
       <Layout>
         <h1>DN MEDIA PLAYLIST</h1>
-        <RecentList />
+        {recentAlbums.length > 0 && <RecentList />}
         <NowPlaying albums={albums} />
       </Layout>
       <CurrentPlaying album={nowPlaying} isPlaying />
+
+      {/* <ReactJkMusicPlayer audioLists={albums} /> */}
     </>
   );
 }

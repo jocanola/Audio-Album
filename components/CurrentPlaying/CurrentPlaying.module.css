@@ -25,3 +25,7 @@
   height: 70px;
   background: #ffffff;
 }
+
+/* audio::-webkit-media-controls-play-button {
+  display: none;
+} */

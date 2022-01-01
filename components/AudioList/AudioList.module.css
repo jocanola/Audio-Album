@@ -2,7 +2,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  max-width: 693px;
+  width: 698px;
 }
 
 .audio-number {
@@ -14,8 +14,3 @@
   margin-right: 5px;
 }
 
-/* .audio-type {
-}
-
-.audio-size {
-} */
