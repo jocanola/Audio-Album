@@ -1,14 +1,16 @@
-.audioList {
+.audio-list {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  max-width: 693px;
+  width: 698px;
 }
 
-.audioNumber {
+.audio-number {
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;
   font-size: 19px;
   line-height: 28px;
+  margin-right: 5px;
 }
+
