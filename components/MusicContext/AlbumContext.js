@@ -7,6 +7,9 @@ export const AlbumContextProvider = ({ children, albums }) => {
   const [album, setAlbum] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [recentAlbums, setRecentAlbums] = useState([]);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [audioDetail, setAudioDetail] = useState(null);
 
   useEffect(() => {
     setNextSongIndex(() => {
@@ -43,19 +46,64 @@ export const AlbumContextProvider = ({ children, albums }) => {
     }
   };
 
+  const startTimer = () => {
+    // Clear any timers already running
+
+    clearInterval(audioDetail?.current);
+    setProgress(audioDetail?.current?.currentTime);
+    setDuration(audioDetail?.current?.duration);
+    if (isPlaying) {
+      setInterval(() => {
+        if (audioDetail?.current?.ended) {
+          // toNextTrack();
+        } else {
+          setProgress(audioDetail?.current?.currentTime);
+        }
+      }, [1000]);
+    }
+  };
+
   const addAlbum = (album, index) => {
+    startTimer();
     setCurrentSongIndex(index);
+    console.log(audioDetail?.current?.currentTime);
+    console.log(audioDetail?.current?.duration);
+    // setProgress(audioDetail?.current?.currentTime);
+    // setDuration(audioDetail?.current?.duration);
+
     if (recentAlbums.includes(album) === false) {
       setRecentAlbums([...recentAlbums, album]);
     }
     setIsPlaying(true);
   };
-  console.log("recentPlayed", recentAlbums);
+
+  const onScrub = (value) => {
+    // Clear any timers already running
+    // clearInterval(intervalRef.current);
+    let audioCurrentTime = () => audioDetail?.current?.currentTime;
+    audioCurrentTime = value;
+    // if(audioDetail){
+    // audioDetail?.current?.currentTime = value;
+
+    // }
+    setProgress(audioDetail?.current?.currentTime);
+  };
+
+  const onScrubEnd = () => {
+    // If not already playing, start
+    if (!isPlaying) {
+      setIsPlaying(true);
+    }
+    startTimer();
+  };
+  // console.log("recentPlayed", recentAlbums);
+  console.log("progress", progress);
+  console.log("duration", duration);
+
   return (
     <AlbumContext.Provider
       value={{
         albums: album,
-        // addAlbum,
         setAlbum,
         SkipSong,
         currentSongIndex,
@@ -63,6 +111,13 @@ export const AlbumContextProvider = ({ children, albums }) => {
         setIsPlaying,
         addAlbum,
         recentAlbums,
+        progress,
+        setProgress,
+        setAudioDetail,
+        audioDetail,
+        duration,
+        onScrub,
+        onScrubEnd,
       }}
     >
       {children}
