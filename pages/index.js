@@ -31,8 +31,6 @@ export default function Home({ albums }) {
         <NowPlaying albums={albums} />
       </Layout>
       <CurrentPlaying album={nowPlaying} isPlaying />
-
-      {/* <ReactJkMusicPlayer audioLists={albums} /> */}
     </>
   );
 }

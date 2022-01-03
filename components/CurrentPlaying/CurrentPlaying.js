@@ -8,19 +8,36 @@ import { useEffect } from "react";
 
 export const CurrentPlaying = () => {
   //context
-  const { nowPlaying, isPlaying, albums, currentSongIndex } =
-    useContext(AlbumContext);
-  const audioEl = useRef(null);
+  const {
+    duration,
+    progress,
+    setAudioDetail,
+    isPlaying,
+    albums,
+    currentSongIndex,
+    onScrub,
+    onScrubEnd,
+  } = useContext(AlbumContext);
+  const audioRef = useRef(null);
 
   //   onClick={() => addAlbum(album)}
   useEffect(() => {
     if (isPlaying) {
-      audioEl.current.play();
+      audioRef.current.play();
+      setAudioDetail(audioRef);
+      // audioRef.current.play();
     } else {
-      audioEl.current.pause();
+      audioRef.current.pause();
     }
   });
+
+  const currentPercentage = duration
+    ? `${(Number(progress) / Number(duration)) * 100}%`
+    : "0%";
+
+  console.log(currentPercentage);
   console.log("AlbumList", albums[currentSongIndex]);
+
   const currentPlayingAlbum = albums[currentSongIndex];
   return (
     <div className={styles["is-playlist"]}>
@@ -39,9 +56,16 @@ export const CurrentPlaying = () => {
         <audio
           className="audio-player"
           src={albums[currentSongIndex]?.audio}
-          ref={audioEl}
+          ref={audioRef}
         ></audio>
-        {/* <AudioProgress /> */}
+
+        <AudioProgress
+          duration={duration}
+          progress={progress}
+          currentPercentage={currentPercentage}
+          onScrub={onScrub}
+          onScrubEnd={onScrubEnd}
+        />
       </div>
     </div>
   );
